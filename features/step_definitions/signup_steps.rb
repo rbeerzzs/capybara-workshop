@@ -1,35 +1,32 @@
 When(/^I am on Appimation home page/) do
-  visit('/')
-  find(:css, '#start_button')
+  visit('/legacy')
+  unless find(:css, '#logo').visible?
+    raise "Logo not visible"
+  end
+end 
+
+When(/I open SignUp form/) do
+  find(:css, '#signup-b').click
+  unless find(:css, '#signup').visible?
+    raise "element not visible"
+  end  
 end
-# “Try Now” button
-find(:xpath, "//button[@id = 'start_button']")
-find(:css,"#start_button")
-# "Sign up" button
-find(:xpath, "//button [@id = 'signup-b']")
-find(:css,"#signup-b")
-# "Contact us" section 
-find(:xpath,"//section[@id = 'cta']")
-find(:css,"#cta")
-# "Contact us" name input
-find(:xpath, "//input[@name='name']")
-find(:css,"input[name='name']")
-# "Contact us" email input
-find(:xpath,"//input[@name='from']")
-find(:css,"input[name='from']")
-#"Contact us" message input
-find(:xpath,"//textarea[@name='body']")
-find(:css,"textarea[name='body']")
-#“Contact Us” send button
-find(:xpath, "//input[@id='contactus-button']")
-fins(:css,("input[id='contactus-button']") 
-#"FaceBook logo at the bottom of page"
-find(:xpath,"//a[@target = '_blank']")
-find(:css,"a.icon.fa-facebook")
-# "All Feature sections in list"
-find(:css, ".features-row>section")
-find(:xpath, "//img[@class = 'feature-row']")
-#Chain Requests with reusable data image
-find(:css,"img[src = 'static/images/features/chain.png']")
-find(:xpath,"//img[@src = 'static/images/features/chain.png']")
+
+When("I enter {string},{string},{string} information") do |email, password, proj_name|
+  find(:css, 'form[action="/user"] input[type="email"]').send_keys(email)
+  find(:css, 'input[name="password1"]').send_keys(password)
+  find(:css, 'input[name="password2"]').send_keys(password)
+  find(:css, 'input[name="project_name"]').send_keys(proj_name)
+end
+When(/^I close SignUp form/) do
+  find(:css, '#signup .closecross').click 
+end
+
+
+When(/^I open Login form/) do
+  find(:css, '#login-b').click
+  unless find(:css, '#login').visible?
+    raise "element not visible"
+  end
+
 
